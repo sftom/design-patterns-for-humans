@@ -694,82 +694,86 @@ Wikipedia says
 
 Translating our WebPage example from above. Here we have the `WebPage` hierarchy
 
-```php
-interface WebPage
-{
-    public function __construct(Theme $theme);
-    public function getContent();
+```Java
+public interface Webpage {
+	public String  getContent();
 }
 
-class About implements WebPage
-{
-    protected $theme;
-
-    public function __construct(Theme $theme)
-    {
-        $this->theme = $theme;
-    }
-
-    public function getContent()
-    {
-        return "About page in " . $this->theme->getColor();
-    }
+public class About implements Webpage{
+	protected Theme theme;
+	  
+	public About(Theme theme) {
+		super();
+		this.theme = theme;
+	}
+	
+	@Override
+	public String getContent() {
+		return "About page in " + this.theme.getColor();
+	}
 }
 
-class Careers implements WebPage
+public class Careers implements Webpage
 {
-    protected $theme;
+    protected Theme theme;
 
-    public function __construct(Theme $theme)
-    {
-        $this->theme = $theme;
-    }
+    public Careers(Theme theme) {
+		super();
+		this.theme = theme;
+	}
 
-    public function getContent()
+    public String getContent()
     {
-        return "Careers page in " . $this->theme->getColor();
+        return "Careers page in " + this.theme.getColor();
     }
 }
 ```
 And the separate theme hierarchy
-```php
+```Java
 
-interface Theme
-{
-    public function getColor();
+public interface Theme {
+	public String getColor();
 }
 
-class DarkTheme implements Theme
+public class DarkTheme implements Theme
 {
-    public function getColor()
-    {
-        return 'Dark Black';
-    }
+	public DarkTheme() {}
+
+	public String getColor()
+    	{
+        return "Dark Black";
+    	}
 }
-class LightTheme implements Theme
+
+public class LightTheme implements Theme
 {
-    public function getColor()
-    {
-        return 'Off white';
-    }
+	public LightTheme(){} 
+	
+	public String getColor()
+    	{ 
+        return "Off white";
+    	}
 }
-class AquaTheme implements Theme
+
+public class AquaTheme implements Theme
 {
-    public function getColor()
-    {
-        return 'Light blue';
+	public AquaTheme(){} 
+	
+	public String getColor()
+    { 
+        return "Light blue";
     }
 }
 ```
 And both the hierarchies
-```php
-$darkTheme = new DarkTheme();
+```Java
 
-$about = new About($darkTheme);
-$careers = new Careers($darkTheme);
+	DarkTheme darkTheme = new DarkTheme();
+	About about = new About(darkTheme);
+	Careers careers = new Careers(darkTheme);
 
-echo $about->getContent(); // "About page in Dark Black";
-echo $careers->getContent(); // "Careers page in Dark Black";
+	System.out.println( about.getContent()); // "About page in Dark Black";
+	System.out.println(careers.getContent()); // "Careers page in Dark Black";
 ```
 
 🌿 Composite
